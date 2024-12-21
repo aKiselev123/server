@@ -44,5 +44,34 @@ func GetAllTeachers(c *gin.Context) {
 }
 
 func CreateTeachers(c *gin.Context) {
+	// Структура для привязки данных
+	var newTeacher models.Teacher
 
+	// Привязка JSON из запроса к структуре
+	if err := c.BindJSON(&newTeacher); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Invalid JSON format"})
+		return
+	}
+
+	// Валидация данных (можно расширить)
+	if newTeacher.Last_name == "" || newTeacher.First_name == "" {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Fields Last_name and First_name are required"})
+		return
+	}
+
+	// Получение подключения к базе данных
+	db := GetDB()
+
+	// SQL-запрос на добавление данных
+	query := `INSERT INTO "Преподаватель" (Фамилия, Имя, Отчество) VALUES ($1, $2, $3)`
+	_, err := db.Exec(query, newTeacher.Last_name, newTeacher.First_name, newTeacher.Patronymic)
+	if err != nil {
+		fmt.Println("Ошибка добавления преподавателя:", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to add teacher to the database"})
+		return
+	}
+
+	// Успешный ответ
+	fmt.Println("Преподаватель добавлен:", newTeacher)
+	c.JSON(http.StatusCreated, newTeacher)
 }

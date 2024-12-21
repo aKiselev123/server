@@ -21,6 +21,10 @@ func main() {
 	router.Use(gin.Logger())
 
 	router.Use(cors.Default())
+
+	//Удаление из таблицы по Id
+	router.DELETE("/delete/:tableName/:id", routes.DeleteById)
+
 	// Преподаватели
 	router.GET("/teachers", routes.GetAllTeachers)
 	router.POST("/teachers", routes.CreateTeachers)
