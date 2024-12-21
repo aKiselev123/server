@@ -16,12 +16,11 @@ func main() {
 	if port == "" {
 		port = "8000"
 	}
-
+	routes.ConnectDB()
 	router := gin.New()
 	router.Use(gin.Logger())
 
 	router.Use(cors.Default())
-
 	// Преподаватели
 	router.GET("/teachers", routes.GetAllTeachers)
 	router.POST("/teachers", routes.CreateTeachers)

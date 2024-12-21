@@ -2,6 +2,7 @@ package routes
 
 import (
 	"fmt"
+	"log"
 	"net/http"
 	"server/models"
 
@@ -12,7 +13,6 @@ import (
 func GetAllTeachers(c *gin.Context) {
 	// Получаем подключение к базе данных через GORM
 	db := GetDB()
-
 	// // Создаём срез для хранения
 	// var teachers []models.Teacher
 
@@ -24,7 +24,8 @@ func GetAllTeachers(c *gin.Context) {
 	// }
 	rows, err := db.Query(`select * from "Преподаватель"`)
 	if err != nil {
-		panic(err)
+		log.Fatalf("Ошибка при извлечении пользователей: %v", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при выполнении запроса"})
 	}
 	defer rows.Close()
 	teachers := []models.Teacher{}
