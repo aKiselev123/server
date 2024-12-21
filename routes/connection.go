@@ -6,11 +6,15 @@ import (
 	"os"
 
 	"github.com/joho/godotenv"
-	"gorm.io/driver/postgres"
-	"gorm.io/gorm"
+	//"gorm.io/driver/postgres"
+	//"gorm.io/gorm"
+	"database/sql"
+
+	_ "github.com/jackc/pgx/v5/stdlib"
 )
 
-var DB *gorm.DB
+// var DB *gorm.DB
+var DB *sql.DB
 
 // ConnectDB инициализирует подключение к PostgreSQL
 func ConnectDB() {
@@ -28,22 +32,37 @@ func ConnectDB() {
 	dbname := os.Getenv("DB_NAME")
 
 	// Формируем строку подключения
-	dsn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
+	// strconn := fmt.Sprintf("host=%s port=%s user=%s password=%s dbname=%s sslmode=disable", host, port, user, password, dbname)
 
-	// Подключаемся к PostgreSQL через GORM
-	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	// // Подключаемся к PostgreSQL через GORM
+	// db, err := gorm.Open(postgres.Open(strcon), &gorm.Config{})
+	// if err != nil {
+	// 	log.Fatalf("Ошибка при подключении к базе данных: %v", err)
+	// }
+
+	// // Выводим успешное сообщение
+	// fmt.Println("Успешное подключение к PostgreSQL!")
+	strconn := fmt.Sprintf("postgres://%s:%s@%s:%s/%s", user, password, host, port, dbname)
+	db, err := sql.Open("pgx", strconn)
 	if err != nil {
-		log.Fatalf("Ошибка при подключении к базе данных: %v", err)
+		log.Fatalf("Ошибка подключения к базе данных: %v", err)
 	}
 
-	// Выводим успешное сообщение
-	fmt.Println("Успешное подключение к PostgreSQL!")
+	// Проверка соединения
+	if err = db.Ping(); err != nil {
+		log.Fatalf("Не удалось подключиться к базе данных: %v", err)
+	}
 
+	fmt.Println("Успешное подключение к базе данных!")
 	// Сохраняем подключение в глобальной переменной
 	DB = db
 }
 
 // GetDB возвращает экземпляр подключения к базе данных
-func GetDB() *gorm.DB {
+//
+//	func GetDB() *gorm.DB {
+//		return DB
+//	}
+func GetDB() *sql.DB {
 	return DB
 }

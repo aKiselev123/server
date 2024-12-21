@@ -1,42 +1,42 @@
 package models
 
 type Teacher struct {
-	id         uint    `gorm:"primaryKey;autoIncrement" json:"id"` // Primary key
-	last_name  *string `json:"last_name"`                          // Фамилия
-	first_name *string `json:"first_name"`                         // Имя
-	patronymic *string `json:"patronymic"`                         // Отчество
+	Id         int    `json:"id"`         // Primary key
+	Last_name  string `json:"last_name"`  // Фамилия
+	First_name string `json:"first_name"` // Имя
+	Patronymic string `json:"patronymic"` // Отчество
 }
 
 type Lesson struct {
-	id        uint    `gorm:"primaryKey;autoIncrement" json:"id"` // Primary key
-	name      *string `json:"name"`                               // Название занятия
-	professor uint    `json:"professor"`                          // ID профессора
+	Id        int    `json:"id"`        // Primary key
+	Name      string `json:"name"`      // Название занятия
+	Professor int    `json:"professor"` // ID профессора
 }
 
 type Schedule struct {
-	id           uint `gorm:"primaryKey;autoIncrement" json:"id"` // Primary key
-	lesson_id    uint `json:"lesson_number"`                      // id предмета
-	group_id     uint `json:"group_number"`                       // id группы
-	class_id     uint `json:"class_number"`                       // id предмета
-	day_id       uint `json:"day_number"`                         // День недели (id)
-	classroom_id uint `json:"classroom_number"`                   // id аудитории
+	Id           int `json:"id"`               // Primary key
+	Lesson_id    int `json:"lesson_number"`    // id предмета
+	Group_id     int `json:"group_number"`     // id группы
+	Class_id     int `json:"class_number"`     // id предмета
+	Day_id       int `json:"day_number"`       // День недели (id)
+	Classroom_id int `json:"classroom_number"` // id аудитории
 }
 
 type Group struct {
-	id      uint    `gorm:"primaryKey;autoIncrement" json:"id"` // Primary key
-	name    *string `json:"name"`                               // Название группы
-	course  uint    `json:"course"`                             // Курс
-	number  uint    `json:"number"`                             // Номер группы
-	program *string `json:"program"`                            // Учебная программа (БО/МО/CO)
+	Id      int    `json:"id"`      // Primary key
+	Name    string `json:"name"`    // Название группы
+	Course  int    `json:"course"`  // Курс
+	Number  int    `json:"number"`  // Номер группы
+	Program string `json:"program"` // Учебная программа (БО/МО/CO)
 }
 
 type Classroom struct {
-	id     uint    `gorm:"primaryKey;autoIncrement" json:"id"` // Primary key
-	number *string `json:"number"`                             // Номер аудитории
+	Id     int    `json:"id"`     // Primary key
+	Number string `json:"number"` // Номер аудитории
 }
 
 type Day struct {
-	id        uint    `gorm:"primaryKey;autoIncrement" json:"id"` // Primary key
-	name      *string `json:"name"`                               // Название дня
-	type_week *string `json:"type_week"`                          // Тип недели (числитель/знаменатель)
+	Id        int    `json:"id"`        // Primary key
+	Name      string `json:"name"`      // Название дня
+	Type_week string `json:"type_week"` // Тип недели (числитель/знаменатель)
 }
