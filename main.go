@@ -28,7 +28,7 @@ func main() {
 	// Преподаватели
 	router.GET("/teachers", routes.GetAllTeachers)
 	router.POST("/teachers", routes.CreateTeachers)
-	// router.PUT("/teachers/:id", routes.UpdateTeachers)
+	router.PUT("/teachers/:id", routes.UpdateTeachers)
 	// router.DELETE("/teachers/:id", routes.DeleteTeachers)
 
 	// // Группы

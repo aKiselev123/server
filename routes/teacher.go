@@ -11,17 +11,7 @@ import (
 )
 
 func GetAllTeachers(c *gin.Context) {
-	// Получаем подключение к базе данных через GORM
 	db := GetDB()
-	// // Создаём срез для хранения
-	// var teachers []models.Teacher
-
-	// // Выполняем запрос к базе данных
-	// if err := db.Find(&teachers).Error; err != nil {
-	// 	log.Fatalf("Ошибка при извлечении пользователей: %v", err)
-	// 	c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка при извлечении пользователей"})
-	// 	return
-	// }
 	rows, err := db.Query(`select * from "Преподаватель"`)
 	if err != nil {
 		log.Fatalf("Ошибка при извлечении пользователей: %v", err)
@@ -74,4 +64,29 @@ func CreateTeachers(c *gin.Context) {
 	// Успешный ответ
 	fmt.Println("Преподаватель добавлен:", newTeacher)
 	c.JSON(http.StatusCreated, newTeacher)
+}
+
+func UpdateTeachers(c *gin.Context) {
+	var updatedTeacher models.Teacher
+	id := c.Param("id")
+
+	// Привязка входящих данных JSON к структуре
+	if err := c.ShouldBindJSON(&updatedTeacher); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	db := GetDB()
+
+	query := fmt.Sprintf(`UPDATE "Преподаватель" SET Фамилия = $1, Имя = $2, Отчество = $3 WHERE id = %s`, id)
+	_, err := db.Exec(query, updatedTeacher.Last_name, updatedTeacher.First_name, updatedTeacher.Patronymic)
+	if err != nil {
+		fmt.Println("Ошибка изменения преподавателя:", err)
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to update teacher to the database"})
+		return
+	}
+
+	// Успешный ответ
+	fmt.Println("Преподаватель изменен:", updatedTeacher)
+	c.JSON(http.StatusCreated, updatedTeacher)
 }
