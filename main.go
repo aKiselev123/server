@@ -26,40 +26,40 @@ func main() {
 	router.DELETE("/delete/:tableName/:id", routes.DeleteById)
 
 	// Преподаватели
-	router.GET("/teachers", routes.GetAllTeachers)
-	router.POST("/teachers", routes.CreateTeachers)
-	router.PUT("/teachers/:id", routes.UpdateTeachers)
-	// router.DELETE("/teachers/:id", routes.DeleteTeachers)
+	router.GET("/teacher", routes.GetAllTeachers)
+	router.POST("/teacher", routes.CreateTeacher)
+	router.PUT("/teacher/:id", routes.UpdateTeacher)
+	// router.DELETE("/teacher/:id", routes.DeleteTeachers)
 
-	// // Группы
-	// router.GET("/groups", routes.GetAllGroups)
-	// router.POST("/groups", routes.CreateGroups)
-	// router.PUT("/groups/:id", routes.UpdateGroups)
-	// router.DELETE("/groups/:id", routes.DeleteGroups)
+	// Группы
+	router.GET("/groups", routes.GetAllGroups)
+	router.POST("/group", routes.CreateGroup)
+	router.PUT("/group/:id", routes.UpdateGroup)
+	// router.DELETE("/group/:id", routes.DeleteGroups)
 
-	// // Аудитории
-	// router.GET("/classrooms", routes.GetAllClassrooms)
-	// router.POST("/classrooms", routes.CreateClassrooms)
-	// router.PUT("/classrooms/:id", routes.UpdateClassrooms)
-	// router.DELETE("/classrooms/:id", routes.DeleteClassrooms)
+	// Аудитории
+	router.GET("/classroom", routes.GetAllClassrooms)
+	router.POST("/classroom", routes.CreateClassroom)
+	router.PUT("/classroom/:id", routes.UpdateClassroom)
+	// router.DELETE("/classroom/:id", routes.DeleteClassrooms)
 
-	// // Дни недели
-	// router.GET("/days", routes.GetAllDays)
-	// router.POST("/days", routes.CreateDays)
-	// router.PUT("/days/:id", routes.UpdateDays)
-	// router.DELETE("/days/:id", routes.DeleteDays)
+	// Дни недели
+	router.GET("/day", routes.GetAllDays)
+	router.POST("/day", routes.CreateDay)
+	router.PUT("/day/:id", routes.UpdateDay)
+	// router.DELETE("/day/:id", routes.DeleteDays)
 
-	// // Пары
-	// router.GET("/schedules", routes.GetAllSchedules)
-	// router.POST("/schedules", routes.CreateSchedules)
-	// router.PUT("/schedules/:id", routes.UpdateSchedules)
-	// router.DELETE("/schedules/:id", routes.DeleteSchedules)
+	// Пары
+	router.GET("/schedule", routes.GetAllSchedules)
+	router.POST("/schedule", routes.CreateSchedule)
+	router.PUT("/schedule/:id", routes.UpdateSchedule)
+	// router.DELETE("/schedule/:id", routes.DeleteSchedules)
 
-	// // Предметы
-	// router.GET("/lessons", routes.GetAllLessons)
-	// router.POST("/lessons", routes.CreateLessons)
-	// router.PUT("/lessons/:id", routes.UpdateLessons)
-	// router.DELETE("/lessons/:id", routes.DeleteLessons)
+	// Предметы
+	router.GET("/lesson", routes.GetAllLessons)
+	router.POST("/lesson", routes.CreateLesson)
+	router.PUT("/lesson/:id", routes.UpdateLesson)
+	// router.DELETE("/lesson/:id", routes.DeleteLessons)
 
 	router.Run(":" + port)
 }

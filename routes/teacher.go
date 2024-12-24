@@ -33,7 +33,7 @@ func GetAllTeachers(c *gin.Context) {
 	c.JSON(http.StatusOK, teachers)
 }
 
-func CreateTeachers(c *gin.Context) {
+func CreateTeacher(c *gin.Context) {
 	// Структура для привязки данных
 	var newTeacher models.Teacher
 
@@ -43,8 +43,8 @@ func CreateTeachers(c *gin.Context) {
 		return
 	}
 
-	// Валидация данных (можно расширить)
-	if newTeacher.Last_name == "" || newTeacher.First_name == "" {
+	// Валидация данных
+	if newTeacher.Last_name == "" || newTeacher.First_name == "" || newTeacher.Patronymic == "" {
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Fields Last_name and First_name are required"})
 		return
 	}
@@ -57,7 +57,7 @@ func CreateTeachers(c *gin.Context) {
 	_, err := db.Exec(query, newTeacher.Last_name, newTeacher.First_name, newTeacher.Patronymic)
 	if err != nil {
 		fmt.Println("Ошибка добавления преподавателя:", err)
-		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to add teacher to the database"})
+		c.JSON(http.StatusInternalServerError, gin.H{"error": "Ошибка добавления преподавателя"})
 		return
 	}
 
@@ -66,7 +66,7 @@ func CreateTeachers(c *gin.Context) {
 	c.JSON(http.StatusCreated, newTeacher)
 }
 
-func UpdateTeachers(c *gin.Context) {
+func UpdateTeacher(c *gin.Context) {
 	var updatedTeacher models.Teacher
 	id := c.Param("id")
 
